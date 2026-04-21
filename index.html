@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techbina – 고객과 파트너를 기술로 연결하다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root {
+  --primary: #017AFF;
+  --primary-dark: #0062d1;
+  --primary-light: #e8f2ff;
+  --text: #0d1117;
+  --text-sub: #4a5568;
+  --text-muted: #8a96a8;
+  --border: #e2e8f0;
+  --bg: #ffffff;
+  --bg-soft: #f7f9fc;
+  --bg-alt: #f0f5ff;
+  --header-h: 68px;
+  --radius: 10px;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,.06), 0 2px 12px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 20px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Pretendard Variable','Pretendard',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+
+/* ─── HEADER ─── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  height: var(--header-h);
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+}
+.header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  width: 100%; display: flex; align-items: center; gap: 32px;
+}
+.logo {
+  font-family:'DM Serif Display',serif;
+  font-size: 22px; letter-spacing: -.5px;
+  color: var(--text); white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
+}
+.logo span{color:var(--primary);}
+
+/* GNB */
+.gnb { display: flex; align-items: center; gap: 2px; flex: 1; }
+.gnb-item {
+  position: relative;
+  padding: 8px 14px;
+  font-size: 14px; font-weight: 500; color: var(--text-sub);
+  border-radius: 6px;
+  transition: color .2s, background .2s;
+  white-space: nowrap;
+}
+.gnb-item:hover { color: var(--primary); background: var(--primary-light); }
+.gnb-item.active { color: var(--primary); }
+.gnb-item svg { display: inline-block; vertical-align: middle; margin-left: 3px; }
+
+/* Dropdown */
+.dropdown {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); padding: 8px;
+  min-width: 180px; display: none; z-index: 200;
+}
+.gnb-item:hover .dropdown, .gnb-item:focus-within .dropdown { display: block; }
+.dropdown a {
+  display: block; padding: 9px 14px; font-size: 13.5px; color: var(--text-sub);
+  border-radius: 6px; transition: background .15s, color .15s;
+}
+.dropdown a:hover { background: var(--primary-light); color: var(--primary); }
+
+/* Header right */
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+/* Search bar */
+.search-wrap { position: relative; }
+.search-input {
+  width: 220px; height: 36px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--bg-soft);
+  padding: 0 36px 0 14px; font-size: 13.5px; color: var(--text);
+  transition: border-color .2s, width .3s, box-shadow .2s;
+  font-family: inherit;
+}
+.search-input:focus { outline: none; border-color: var(--primary); width: 270px; box-shadow: 0 0 0 3px rgba(1,122,255,.1); }
+.search-btn {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); display: flex; align-items: center;
+}
+.search-btn:hover { color: var(--primary); }
+
+/* Search results dropdown */
+.search-results {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); display: none; z-index: 300; overflow: hidden;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  transition: background .15s; cursor: pointer;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: var(--bg-soft); }
+.sr-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .5px;
+  text-transform: uppercase; padding: 3px 7px; border-radius: 4px;
+  background: var(--primary-light); color: var(--primary);
+  white-space: nowrap; margin-top: 2px;
+}
+.sr-title { font-size: 13.5px; font-weight: 500; color: var(--text); }
+.sr-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* Buttons */
+.btn-login {
+  height: 36px; padding: 0 16px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 500; color: var(--text-sub);
+  border: 1.5px solid var(--border); background: #fff;
+  transition: border-color .2s, color .2s;
+}
+.btn-login:hover { border-color: var(--primary); color: var(--primary); }
+.btn-signup {
+  height: 36px; padding: 0 18px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; color: #fff;
+  background: var(--primary);
+  transition: background .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(1,122,255,.3);
+}
+.btn-signup:hover { background: var(--primary-dark); box-shadow: 0 4px 14px rgba(1,122,255,.35); }
+
+/* Mobile hamburger */
+.hamburger { display: none; padding: 8px; color: var(--text); }
+
+/* ─── HERO ─── */
+#hero {
+  margin-top: var(--header-h);
+  background: linear-gradient(135deg, #011f4f 0%, #013b8a 50%, #017AFF 100%);
+  padding: 90px 24px 80px;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-label {
+  display: inline-block; padding: 6px 14px; border-radius: 20px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+  color: rgba(255,255,255,.9); margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 4vw, 54px); line-height: 1.2;
+  color: #fff; margin-bottom: 16px; letter-spacing: -.5px;
+}
+.hero-title em { color: #7cbfff; font-style: normal; }
+.hero-sub {
+  font-size: 16px; color: rgba(255,255,255,.7); margin-bottom: 36px; line-height: 1.8;
+}
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-hero-primary {
+  height: 48px; padding: 0 28px; border-radius: 10px;
+  font-size: 15px; font-weight: 700; color: var(--primary);
+  background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+.btn-hero-outline {
+  height: 48px; padding: 0 28px; border-radius: 10px;
+  font-size: 15px; font-weight: 600; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.35);
+  transition: background .2s, border-color .2s;
+}
+.btn-hero-outline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.6); }
+
+/* Hero stats */
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 40px;
+  padding-top: 32px; border-top: 1px solid rgba(255,255,255,.12);
+}
+.stat-item {}
+.stat-num { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+.stat-label { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 2px; }
+
+/* Hero visual */
+.hero-visual {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px; padding: 28px;
+  backdrop-filter: blur(8px);
+}
+.webinar-card-preview {
+  background: rgba(255,255,255,.08); border-radius: 12px;
+  padding: 20px; margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.live-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #ff3b3b; color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px; letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse-dot 1.2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
+.wc-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+.wc-meta { font-size: 12px; color: rgba(255,255,255,.5); }
+.wc-speakers { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
+.speaker-ava {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #5ac8fa);
+  border: 2px solid rgba(255,255,255,.3);
+}
+.speaker-ava:nth-child(2) { background: linear-gradient(135deg, #34c759, #30d158); margin-left: -8px; }
+.speaker-ava:nth-child(3) { background: linear-gradient(135deg, #ff9500, #ff6b00); margin-left: -8px; }
+.wc-count { font-size: 12px; color: rgba(255,255,255,.5); margin-left: 4px; }
+
+/* Upcoming webinars list */
+.upcoming-mini { margin-top: 16px; }
+.mini-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,.05); border-radius: 8px; padding: 10px 14px;
+  margin-bottom: 8px; border: 1px solid rgba(255,255,255,.07);
+}
+.mini-title { font-size: 13px; color: rgba(255,255,255,.8); font-weight: 500; }
+.mini-date { font-size: 11px; color: rgba(255,255,255,.4); }
+.mini-btn {
+  font-size: 11px; font-weight: 600; color: var(--primary);
+  background: rgba(1,122,255,.15); padding: 4px 10px; border-radius: 5px;
+  transition: background .2s;
+}
+.mini-btn:hover { background: rgba(1,122,255,.3); }
+
+/* ─── SECTION BASE ─── */
+.section { padding: 72px 24px; }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-header { margin-bottom: 40px; }
+.section-label {
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--primary); margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(24px, 3vw, 36px); color: var(--text);
+  letter-spacing: -.5px; margin-bottom: 10px;
+}
+.section-sub { font-size: 15px; color: var(--text-sub); }
+
+/* ─── TABS ─── */
+.tab-wrap { display: flex; gap: 4px; margin-bottom: 32px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500;
+  color: var(--text-sub); border: 1.5px solid var(--border);
+  background: #fff; transition: all .2s;
+}
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── WEBINAR CARDS ─── */
+.webinar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.webinar-card {
+  border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; background: #fff;
+  box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s;
+}
+.webinar-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.wc-thumb {
+  height: 160px; background: linear-gradient(135deg, #011f4f, #017AFF);
+  position: relative; display: flex; align-items: flex-end; padding: 16px;
+}
+.wc-thumb-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: .07;
+}
+.wc-thumb-bg svg { width: 80px; height: 80px; }
+.status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+  letter-spacing: .3px;
+}
+.badge-live { background: #ff3b3b; color: #fff; }
+.badge-upcoming { background: rgba(255,255,255,.2); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+.badge-replay { background: rgba(255,255,255,.15); color: rgba(255,255,255,.8); }
+.wc-body { padding: 18px; }
+.wc-category {
+  font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--primary); margin-bottom: 8px;
+}
+.wc-card-title {
+  font-size: 15px; font-weight: 700; color: var(--text);
+  line-height: 1.4; margin-bottom: 10px;
+}
+.wc-info { font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; }
+.wc-footer { display: flex; align-items: center; justify-content: space-between; }
+.btn-webinar {
+  height: 34px; padding: 0 16px; border-radius: 7px;
+  font-size: 13px; font-weight: 600; color: var(--primary);
+  border: 1.5px solid var(--primary);
+  transition: background .2s, color .2s;
+}
+.btn-webinar:hover, .btn-webinar.filled { background: var(--primary); color: #fff; }
+.viewer-count { font-size: 12px; color: var(--text-muted); }
+
+/* ─── INSIGHT SECTION ─── */
+#insight { background: var(--bg-soft); }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  border: 1.5px solid var(--border); color: var(--text-sub); background: #fff;
+  transition: all .2s;
+}
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.filter-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+.insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.insight-card {
+  background: #fff; border-radius: 14px; border: 1px solid var(--border);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  transition: transform .25s, box-shadow .25s;
+}
+.insight-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.ic-thumb {
+  height: 140px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; position: relative;
+}
+.ic-thumb.ai { background: linear-gradient(135deg, #0f2950, #1a4b8c); }
+.ic-thumb.cloud { background: linear-gradient(135deg, #024f94, #0099ff); }
+.ic-thumb.sec { background: linear-gradient(135deg, #1a1f36, #2d3561); }
+.ic-thumb.dx { background: linear-gradient(135deg, #00467f, #017AFF); }
+.ic-thumb-icon { position: relative; z-index: 1; }
+.ic-thumb-icon svg { width: 52px; height: 52px; opacity: .9; }
+.ic-body { padding: 18px; }
+.ic-tag {
+  display: inline-block; padding: 3px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  background: var(--primary-light); color: var(--primary); margin-bottom: 10px;
+}
+.ic-title { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+.ic-date { font-size: 12px; color: var(--text-muted); }
+
+/* ─── ARCHIVE (자료실) ─── */
+.archive-table { width: 100%; border-collapse: collapse; }
+.archive-table th {
+  text-align: left; padding: 12px 16px;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  color: var(--text-muted); border-bottom: 2px solid var(--border);
+}
+.archive-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.archive-table tr:hover td { background: var(--bg-soft); }
+.ar-type {
+  display: inline-block; padding: 3px 9px; border-radius: 5px;
+  font-size: 11px; font-weight: 700; letter-spacing: .3px;
+}
+.ar-type.report { background: #fff0e0; color: #d97706; }
+.ar-type.slide { background: var(--primary-light); color: var(--primary); }
+.ar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.ar-date { font-size: 13px; color: var(--text-muted); }
+
+/* Blurred/locked rows */
+.ar-row-locked td { position: relative; }
+.ar-title-locked {
+  font-size: 14px; font-weight: 600; color: var(--text);
+}
+.login-required-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 600; color: var(--primary);
+  background: var(--primary-light); padding: 3px 9px; border-radius: 20px;
+  margin-left: 10px; white-space: nowrap;
+}
+.login-required-badge svg { flex-shrink: 0; }
+.btn-download {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 14px; border-radius: 7px;
+  font-size: 12.5px; font-weight: 600; color: var(--primary);
+  border: 1.5px solid var(--primary); transition: all .2s;
+}
+.btn-download:hover { background: var(--primary); color: #fff; }
+.btn-download-locked {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 32px; padding: 0 14px; border-radius: 7px;
+  font-size: 12.5px; font-weight: 600; color: #fff;
+  background: var(--primary); border: 1.5px solid var(--primary);
+  transition: all .2s; cursor: pointer;
+}
+.btn-download-locked:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+
+/* ─── EVENT SECTION ─── */
+#events { background: var(--bg-soft); }
+.event-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.event-card {
+  background: #fff; border-radius: 14px; border: 1px solid var(--border);
+  padding: 24px; box-shadow: var(--shadow-sm);
+  display: flex; gap: 20px; align-items: flex-start;
+  transition: transform .25s, box-shadow .25s;
+}
+.event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.event-date-box {
+  width: 56px; min-width: 56px; height: 60px; border-radius: 10px;
+  background: var(--primary); display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #fff; text-align: center;
+}
+.event-month { font-size: 10px; font-weight: 700; letter-spacing: .5px; opacity: .8; }
+.event-day { font-size: 24px; font-weight: 800; line-height: 1; }
+.event-info { flex: 1; }
+.event-tag {
+  display: inline-block; padding: 3px 9px; border-radius: 4px;
+  font-size: 11px; font-weight: 700; background: var(--primary-light); color: var(--primary);
+  margin-bottom: 8px;
+}
+.event-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.event-meta { font-size: 13px; color: var(--text-muted); }
+
+/* ─── SERVICE INTRO ─── */
+.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.service-item {
+  background: var(--bg-soft); border-radius: 14px; padding: 28px;
+  border: 1px solid var(--border); transition: border-color .2s, box-shadow .2s;
+}
+.service-item:hover { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(1,122,255,.08); }
+.si-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--primary-light); display: flex; align-items: center; justify-content: center;
+  color: var(--primary); margin-bottom: 16px;
+}
+.si-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.si-desc { font-size: 14px; color: var(--text-sub); line-height: 1.7; }
+
+/* ─── CTA STRIP ─── */
+#cta-strip {
+  background: linear-gradient(135deg, #011f4f, #017AFF);
+  padding: 64px 24px; text-align: center;
+}
+.cta-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(24px, 3vw, 38px); color: #fff; margin-bottom: 12px;
+}
+.cta-sub { font-size: 16px; color: rgba(255,255,255,.7); margin-bottom: 32px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0d1117; color: rgba(255,255,255,.4);
+  padding: 48px 24px 32px;
+}
+.footer-inner { max-width: 1280px; margin: 0 auto; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  margin-bottom: 40px; padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-logo {
+  font-family: 'DM Serif Display', serif; font-size: 20px;
+  color: #fff; margin-bottom: 12px;
+}
+.footer-logo span { color: var(--primary); }
+.footer-desc { font-size: 13.5px; line-height: 1.7; }
+.footer-col h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.7); margin-bottom: 14px; letter-spacing: .3px; }
+.footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,.35); margin-bottom: 8px; transition: color .2s; }
+.footer-col a:hover { color: rgba(255,255,255,.7); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-size: 12.5px; }
+.footer-powered { font-size: 12.5px; }
+.footer-powered span { color: var(--primary); font-weight: 600; }
+
+/* ─── FLOATING BUTTON ─── */
+.floating-btn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 800;
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+}
+.float-consult {
+  display: flex; align-items: center; gap: 8px;
+  height: 48px; padding: 0 20px; border-radius: 24px;
+  background: var(--primary); color: #fff;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(1,122,255,.4);
+  transition: transform .2s, box-shadow .2s;
+}
+.float-consult:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(1,122,255,.5); }
+.float-top {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #fff; border: 1.5px solid var(--border);
+  color: var(--text-sub); display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md); transition: transform .2s;
+}
+.float-top:hover { transform: translateY(-2px); color: var(--primary); }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #fff; border-radius: 20px; width: 100%; max-width: 440px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.2); overflow: hidden;
+  animation: modal-in .25s ease;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-header {
+  background: linear-gradient(135deg, #011f4f, #017AFF);
+  padding: 28px 28px 24px; color: #fff; position: relative;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,.15); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.modal-close:hover { background: rgba(255,255,255,.25); }
+.modal-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.modal-sub { font-size: 14px; opacity: .75; }
+.modal-body { padding: 28px; }
+.modal-tabs { display: flex; gap: 0; margin-bottom: 24px; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); }
+.modal-tab {
+  flex: 1; height: 40px; font-size: 14px; font-weight: 600;
+  color: var(--text-sub); background: #fff; transition: all .2s;
+}
+.modal-tab.active { background: var(--primary); color: #fff; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%; height: 44px; border-radius: 9px;
+  border: 1.5px solid var(--border); padding: 0 14px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(1,122,255,.1); }
+.form-select {
+  width: 100%; height: 44px; border-radius: 9px;
+  border: 1.5px solid var(--border); padding: 0 14px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: #fff; appearance: none;
+}
+.btn-modal-submit {
+  width: 100%; height: 48px; border-radius: 10px;
+  background: var(--primary); color: #fff;
+  font-size: 15px; font-weight: 700; margin-top: 8px;
+  box-shadow: 0 4px 14px rgba(1,122,255,.3);
+  transition: background .2s, transform .2s;
+}
+.btn-modal-submit:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.modal-divider { text-align: center; font-size: 12.5px; color: var(--text-muted); margin: 16px 0; }
+.sns-row { display: flex; gap: 8px; }
+.btn-sns {
+  flex: 1; height: 40px; border-radius: 9px; border: 1.5px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--text-sub);
+  background: #fff; transition: border-color .2s, color .2s;
+}
+.btn-sns:hover { border-color: var(--primary); color: var(--primary); }
+.modal-agree { font-size: 12px; color: var(--text-muted); margin-top: 12px; text-align: center; line-height: 1.6; }
+.modal-agree a { color: var(--primary); }
+
+/* Signup step hidden by default */
+.signup-panel { display: none; }
+.signup-panel.active { display: block; }
+.login-panel { display: none; }
+.login-panel.active { display: block; }
+
+/* ─── MOBILE MENU OVERLAY ─── */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 850; background: #fff;
+  display: none; flex-direction: column; padding: 20px;
+  overflow-y: auto;
+}
+.mobile-nav.active { display: flex; }
+.mobile-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.mobile-nav-logo { font-family: 'DM Serif Display', serif; font-size: 22px; }
+.mobile-nav-logo span { color: var(--primary); }
+.mobile-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+.mobile-menu-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  font-size: 16px; font-weight: 600; color: var(--text);
+}
+.mobile-sub { padding: 8px 0 8px 16px; }
+.mobile-sub a { display: block; padding: 8px 0; font-size: 14px; color: var(--text-sub); border-bottom: 1px solid var(--border); }
+.mobile-btns { display: flex; gap: 10px; margin-top: 24px; }
+.mobile-btns button { flex: 1; height: 44px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .webinar-grid, .insight-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .hero-inner { gap: 32px; }
+}
+@media (max-width: 768px) {
+  .gnb, .header-right .search-wrap, .header-right .btn-login { display: none; }
+  .hamburger { display: flex; }
+  .header-right { gap: 8px; }
+  .header-right .btn-signup { display: none; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .hero-stats { gap: 20px; }
+  .webinar-grid, .insight-grid, .event-grid, .service-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 24px; }
+  .archive-table thead { display: none; }
+  .archive-table td { display: block; padding: 6px 12px; }
+  .archive-table tr { display: block; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; padding: 8px; }
+  .archive-table tr:hover td { background: transparent; }
+}
+@media (max-width: 480px) {
+  .hero-stats { flex-direction: column; gap: 12px; }
+  .section { padding: 48px 16px; }
+  .floating-btn { bottom: 16px; right: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <div class="header-inner">
+    <a href="#" class="logo">Tech<span>bina</span></a>
+
+    <nav class="gnb">
+      <!-- 웨비나 -->
+      <div class="gnb-item">
+        웨비나
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="dropdown">
+          <a href="#webinar" onclick="switchTab('webinar','upcoming'); closeMobileNav();">진행 예정</a>
+          <a href="#webinar" onclick="switchTab('webinar','live'); closeMobileNav();">진행 중</a>
+          <a href="#webinar" onclick="switchTab('webinar','replay'); closeMobileNav();">다시보기</a>
+        </div>
+      </div>
+      <!-- IT인사이트 -->
+      <div class="gnb-item">
+        IT인사이트/보도자료
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="dropdown">
+          <a href="#insight" onclick="filterInsight('all')">전체</a>
+          <a href="#insight" onclick="filterInsight('ai')">AI &amp; Data</a>
+          <a href="#insight" onclick="filterInsight('cloud')">클라우드</a>
+          <a href="#insight" onclick="filterInsight('sec')">보안</a>
+          <a href="#insight" onclick="filterInsight('dx')">디지털 전환(DX)</a>
+        </div>
+      </div>
+      <!-- 이벤트 -->
+      <div class="gnb-item"><a href="#events">이벤트</a></div>
+      <!-- 자료실 -->
+      <div class="gnb-item"><a href="#archive">자료실</a></div>
+      <!-- 서비스 소개 -->
+      <div class="gnb-item">
+        서비스 소개
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="dropdown">
+          <a href="#service">서비스 소개</a>
+          <a href="#service">스튜디오 소개</a>
+          <a href="#" onclick="openModal('consult')">문의</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="header-right">
+      <!-- Search -->
+      <div class="search-wrap" id="searchWrap">
+        <input class="search-input" type="text" placeholder="웨비나, 인사이트 검색..." id="searchInput" autocomplete="off">
+        <button class="search-btn" onclick="doSearch()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <button class="btn-login" onclick="openModal('login')">로그인</button>
+      <button class="btn-signup" onclick="openModal('signup')">회원가입</button>
+      <button class="hamburger" onclick="openMobileNav()" aria-label="메뉴">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ─── MOBILE NAV ─── -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <span class="mobile-nav-logo">Tech<span>bina</span></span>
+    <button class="mobile-close" onclick="closeMobileNav()">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu-item" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    웨비나 <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+  </div>
+  <div class="mobile-sub" style="display:none">
+    <a href="#webinar" onclick="switchTab('webinar','upcoming');closeMobileNav()">진행 예정</a>
+    <a href="#webinar" onclick="switchTab('webinar','live');closeMobileNav()">진행 중</a>
+    <a href="#webinar" onclick="switchTab('webinar','replay');closeMobileNav()">다시보기</a>
+  </div>
+  <div class="mobile-menu-item"><a href="#insight" onclick="closeMobileNav()" style="color:var(--text)">IT인사이트/보도자료</a></div>
+  <div class="mobile-menu-item"><a href="#events" onclick="closeMobileNav()" style="color:var(--text)">이벤트</a></div>
+  <div class="mobile-menu-item"><a href="#archive" onclick="closeMobileNav()" style="color:var(--text)">자료실</a></div>
+  <div class="mobile-menu-item"><a href="#service" onclick="closeMobileNav()" style="color:var(--text)">서비스 소개</a></div>
+  <div class="mobile-btns">
+    <button class="btn-login" onclick="closeMobileNav();openModal('login')">로그인</button>
+    <button class="btn-signup" onclick="closeMobileNav();openModal('signup')">회원가입</button>
+  </div>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">B2B IT Webinar Platform</div>
+      <h1 class="hero-title">고객과 파트너를<br><em>기술로 연결하다</em></h1>
+      <p class="hero-sub">테크비나는 IT 기업을 위한 전문 웨비나 통합 솔루션입니다.<br>방송 연출부터 플랫폼 운영, 사후 영상 제작까지 원스톱으로 지원합니다.</p>
+      <div class="hero-cta">
+        <button class="btn-hero-primary" onclick="openModal('signup')">무료로 시작하기</button>
+        <a href="#service" class="btn-hero-outline">서비스 소개 보기</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">2,400+</div><div class="stat-label">누적 웨비나 진행</div></div>
+        <div class="stat-item"><div class="stat-num">380K+</div><div class="stat-label">총 시청자 수</div></div>
+        <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">파트너 만족도</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="webinar-card-preview">
+        <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+        <div class="wc-title">생성형 AI 도입 전략과 실제 적용 사례 분석</div>
+        <div class="wc-meta">AI &amp; Data · 오늘 14:00 시작 · 시청자 1,247명</div>
+        <div class="wc-speakers">
+          <div class="speaker-ava"></div>
+          <div class="speaker-ava"></div>
+          <div class="speaker-ava"></div>
+          <span class="wc-count">발표자 3인</span>
+          <button class="mini-btn" style="margin-left:auto" onclick="openModal('signup')">참여하기</button>
+        </div>
+      </div>
+      <div class="upcoming-mini">
+        <div class="mini-item">
+          <div>
+            <div class="mini-title">클라우드 네이티브 전환 로드맵 2025</div>
+            <div class="mini-date">2025.07.15 · 15:00</div>
+          </div>
+          <button class="mini-btn" onclick="openModal('signup')">신청</button>
+        </div>
+        <div class="mini-item">
+          <div>
+            <div class="mini-title">제로 트러스트 보안 아키텍처 구축 가이드</div>
+            <div class="mini-date">2025.07.22 · 14:00</div>
+          </div>
+          <button class="mini-btn" onclick="openModal('signup')">신청</button>
+        </div>
+        <div class="mini-item">
+          <div>
+            <div class="mini-title">엔터프라이즈 DX 성공 전략과 ROI 분석</div>
+            <div class="mini-date">2025.07.29 · 16:00</div>
+          </div>
+          <button class="mini-btn" onclick="openModal('signup')">신청</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WEBINAR SECTION ─── -->
+<section class="section" id="webinar">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Webinar</div>
+      <h2 class="section-title">웨비나</h2>
+      <p class="section-sub">IT 전문가와 함께하는 심층 기술 세미나를 지금 바로 만나보세요.</p>
+    </div>
+    <div class="tab-wrap">
+      <button class="tab-btn active" onclick="switchTab('webinar','upcoming',this)">진행 예정</button>
+      <button class="tab-btn" onclick="switchTab('webinar','live',this)">진행 중</button>
+      <button class="tab-btn" onclick="switchTab('webinar','replay',this)">다시보기</button>
+    </div>
+
+    <div class="tab-panel active" id="webinar-upcoming">
+      <div class="webinar-grid">
+        <div class="webinar-card">
+          <div class="wc-thumb">
+            <div class="wc-thumb-bg"><svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="35" stroke="white" stroke-width="2" stroke-dasharray="6 4"/><path d="M30 40l8 8 12-14" stroke="white" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="status-badge badge-upcoming">진행 예정</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">AI &amp; Data</div>
+            <div class="wc-card-title">생성형 AI 도입 전략과 실제 적용 사례 분석</div>
+            <div class="wc-info">2025.07.15 (화) 14:00 · 발표자: 김태현 수석 연구원</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">웨비나 신청</button>
+              <span class="viewer-count">신청 284명</span>
+            </div>
+          </div>
+        </div>
+        <div class="webinar-card">
+          <div class="wc-thumb" style="background:linear-gradient(135deg,#024f94,#0099ff)">
+            <div class="status-badge badge-upcoming">진행 예정</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">클라우드</div>
+            <div class="wc-card-title">클라우드 네이티브 전환 로드맵과 멀티클라우드 전략</div>
+            <div class="wc-info">2025.07.22 (화) 15:00 · 발표자: 이수진 클라우드 아키텍트</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">웨비나 신청</button>
+              <span class="viewer-count">신청 196명</span>
+            </div>
+          </div>
+        </div>
+        <div class="webinar-card">
+          <div class="wc-thumb" style="background:linear-gradient(135deg,#1a1f36,#2d3561)">
+            <div class="status-badge badge-upcoming">진행 예정</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">보안</div>
+            <div class="wc-card-title">제로 트러스트 보안 아키텍처 구축 실전 가이드</div>
+            <div class="wc-info">2025.07.29 (화) 14:00 · 발표자: 박민준 보안 전문가</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">웨비나 신청</button>
+              <span class="viewer-count">신청 152명</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="webinar-live">
+      <div class="webinar-grid">
+        <div class="webinar-card">
+          <div class="wc-thumb">
+            <div class="wc-thumb-bg"><svg viewBox="0 0 80 80" fill="none"><rect x="15" y="20" width="50" height="35" rx="4" stroke="white" stroke-width="2"/><path d="M32 60l16-5" stroke="white" stroke-width="2"/></svg></div>
+            <div class="status-badge badge-live"><span class="live-dot"></span> LIVE</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">디지털 전환</div>
+            <div class="wc-card-title">엔터프라이즈 DX 성공 전략과 ROI 측정 프레임워크</div>
+            <div class="wc-info">현재 진행 중 · 발표자: 최영훈 CTO</div>
+            <div class="wc-footer">
+              <button class="btn-webinar filled" onclick="openModal('signup')">지금 시청하기</button>
+              <span class="viewer-count">시청 1,247명</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="webinar-replay">
+      <div class="webinar-grid">
+        <div class="webinar-card">
+          <div class="wc-thumb" style="background:linear-gradient(135deg,#024f94,#017AFF)">
+            <div class="status-badge badge-replay">다시보기</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">AI &amp; Data</div>
+            <div class="wc-card-title">LLM 기반 기업 내부 지식관리 시스템 구축 전략</div>
+            <div class="wc-info">2025.06.10 (화) · 총 시청 2,841명</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">다시보기</button>
+              <span class="viewer-count">2,841회 시청</span>
+            </div>
+          </div>
+        </div>
+        <div class="webinar-card">
+          <div class="wc-thumb" style="background:linear-gradient(135deg,#1a1f36,#017AFF)">
+            <div class="status-badge badge-replay">다시보기</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">클라우드</div>
+            <div class="wc-card-title">AWS·Azure·GCP 멀티클라우드 비용 최적화 실전편</div>
+            <div class="wc-info">2025.05.20 (화) · 총 시청 1,932명</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">다시보기</button>
+              <span class="viewer-count">1,932회 시청</span>
+            </div>
+          </div>
+        </div>
+        <div class="webinar-card">
+          <div class="wc-thumb" style="background:linear-gradient(135deg,#024f94,#013b8a)">
+            <div class="status-badge badge-replay">다시보기</div>
+          </div>
+          <div class="wc-body">
+            <div class="wc-category">보안</div>
+            <div class="wc-card-title">ISMS-P 인증 실무와 개인정보보호법 대응 전략</div>
+            <div class="wc-info">2025.05.06 (화) · 총 시청 1,456명</div>
+            <div class="wc-footer">
+              <button class="btn-webinar" onclick="openModal('signup')">다시보기</button>
+              <span class="viewer-count">1,456회 시청</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INSIGHT SECTION ─── -->
+<section class="section" id="insight">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">IT Insight</div>
+      <h2 class="section-title">IT인사이트 / 보도자료</h2>
+      <p class="section-sub">산업 최신 트렌드와 기술 인사이트를 전문가 시각으로 제공합니다.</p>
+    </div>
+    <div class="filter-bar" id="insightFilter">
+      <button class="filter-btn active" onclick="filterInsight('all',this)">전체</button>
+      <button class="filter-btn" onclick="filterInsight('ai',this)">AI &amp; Data</button>
+      <button class="filter-btn" onclick="filterInsight('cloud',this)">클라우드</button>
+      <button class="filter-btn" onclick="filterInsight('sec',this)">보안</button>
+      <button class="filter-btn" onclick="filterInsight('dx',this)">디지털 전환(DX) &amp; 전략</button>
+    </div>
+    <div class="insight-grid" id="insightGrid">
+      <div class="insight-card" data-cat="ai">
+        <div class="ic-thumb ai">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="26" cy="26" r="10" stroke="white" stroke-width="2"/><path d="M26 8v6M26 38v6M8 26h6M38 26h6" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="26" r="4" fill="white"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">AI &amp; Data</div>
+          <div class="ic-title">2025 국내 생성형 AI 도입 현황 및 산업별 활용 전망</div>
+          <div class="ic-date">2025.07.01</div>
+        </div>
+      </div>
+      <div class="insight-card" data-cat="cloud">
+        <div class="ic-thumb cloud">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 34c-4.4 0-8-3.6-8-8 0-4 3-7.3 7-7.9.6-4.5 4.5-8 9.3-8 3.2 0 6 1.5 7.8 3.9C31.8 13.5 33.8 13 36 13c5 0 9 4 9 9 0 4-2.6 7.4-6.3 8.7" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M20 42l6-8 6 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">클라우드</div>
+          <div class="ic-title">FinOps 전략으로 클라우드 비용 30% 절감한 사례 연구</div>
+          <div class="ic-date">2025.06.25</div>
+        </div>
+      </div>
+      <div class="insight-card" data-cat="sec">
+        <div class="ic-thumb sec">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26 6L10 12v14c0 10 7.2 18.4 16 20 8.8-1.6 16-10 16-20V12L26 6z" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M19 26l5 5 9-10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">보안</div>
+          <div class="ic-title">랜섬웨어 공격 최신 동향과 기업 대응 방안 2025</div>
+          <div class="ic-date">2025.06.18</div>
+        </div>
+      </div>
+      <div class="insight-card" data-cat="dx">
+        <div class="ic-thumb dx">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="16" width="36" height="24" rx="3" stroke="white" stroke-width="2"/><path d="M16 16V12a2 2 0 012-2h16a2 2 0 012 2v4" stroke="white" stroke-width="2"/><path d="M20 28l4 4 8-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">디지털 전환</div>
+          <div class="ic-title">중견기업 DX 로드맵 수립 전략과 성공 지표 설정법</div>
+          <div class="ic-date">2025.06.10</div>
+        </div>
+      </div>
+      <div class="insight-card" data-cat="ai">
+        <div class="ic-thumb ai">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none"><rect x="10" y="10" width="14" height="14" rx="3" stroke="white" stroke-width="2"/><rect x="28" y="10" width="14" height="14" rx="3" stroke="white" stroke-width="2"/><rect x="10" y="28" width="14" height="14" rx="3" stroke="white" stroke-width="2"/><rect x="28" y="28" width="14" height="14" rx="3" stroke="white" stroke-width="2"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">AI &amp; Data</div>
+          <div class="ic-title">데이터 거버넌스 체계 구축과 MLOps 파이프라인 설계</div>
+          <div class="ic-date">2025.06.05</div>
+        </div>
+      </div>
+      <div class="insight-card" data-cat="cloud">
+        <div class="ic-thumb cloud">
+          <div class="ic-thumb-icon"><svg viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="18" stroke="white" stroke-width="2"/><path d="M26 14v12l8 4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="ic-body">
+          <div class="ic-tag">클라우드</div>
+          <div class="ic-title">쿠버네티스 운영 자동화와 서버리스 아키텍처 비교 분석</div>
+          <div class="ic-date">2025.05.28</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ARCHIVE SECTION ─── -->
+<section class="section" id="archive">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Archive</div>
+      <h2 class="section-title">자료실</h2>
+      <p class="section-sub">웨비나 발표자료와 전문 리포트를 다운로드하세요. 일부 자료는 회원 전용입니다.</p>
+    </div>
+    <table class="archive-table">
+      <thead>
+        <tr>
+          <th>유형</th><th>자료명</th><th>등록일</th><th>다운로드</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ar-type report">리포트</span></td>
+          <td><span class="ar-title">2025 상반기 국내 IT 시장 동향 분석 리포트</span></td>
+          <td><span class="ar-date">2025.07.01</span></td>
+          <td><button class="btn-download" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
+        </tr>
+        <tr>
+          <td><span class="ar-type slide">발표자료</span></td>
+          <td><span class="ar-title">생성형 AI 도입 전략 - 산업별 적용 사례 발표자료</span></td>
+          <td><span class="ar-date">2025.06.10</span></td>
+          <td><button class="btn-download" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
+        </tr>
+        <!-- Locked rows -->
+        <tr class="ar-row-locked">
+          <td><span class="ar-type report">리포트</span></td>
+          <td>
+            <span class="ar-title-locked">클라우드 전환 비용 절감 사례 심층 분석 보고서</span>
+            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
+          </td>
+          <td><span class="ar-date">2025.05.20</span></td>
+          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
+        </tr>
+        <tr class="ar-row-locked">
+          <td><span class="ar-type slide">발표자료</span></td>
+          <td>
+            <span class="ar-title-locked">제로 트러스트 보안 아키텍처 구현 상세 가이드</span>
+            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
+          </td>
+          <td><span class="ar-date">2025.05.06</span></td>
+          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
+        </tr>
+        <tr class="ar-row-locked">
+          <td><span class="ar-type report">리포트</span></td>
+          <td>
+            <span class="ar-title-locked">엔터프라이즈 AI 투자 수익률 분석 및 벤치마킹 데이터</span>
+            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
+          </td>
+          <td><span class="ar-date">2025.04.15</span></td>
+          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── EVENTS SECTION ─── -->
+<section class="section" id="events">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Events</div>
+      <h2 class="section-title">기업 행사 이벤트</h2>
+      <p class="section-sub">테크비나와 함께하는 IT 기업 행사 및 컨퍼런스 정보입니다.</p>
+    </div>
+    <div class="event-grid">
+      <div class="event-card">
+        <div class="event-date-box"><div class="event-month">AUG</div><div class="event-day">05</div></div>
+        <div class="event-info">
+          <div class="event-tag">컨퍼런스</div>
+          <div class="event-title">Techbina Summit 2025 – AI·Cloud 혁신 컨퍼런스</div>
+          <div class="event-meta">서울 코엑스 그랜드볼룸 · 오전 9시 · 참가비 무료(사전 등록)</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date-box" style="background:#5ac8fa"><div class="event-month">JUL</div><div class="event-day">25</div></div>
+        <div class="event-info">
+          <div class="event-tag">네트워킹</div>
+          <div class="event-title">IT 보안 전문가 네트워킹 미트업 – 2025 하반기</div>
+          <div class="event-meta">강남 디캠프 · 오후 6시 · 사전 등록 필수</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date-box" style="background:#34c759"><div class="event-month">SEP</div><div class="event-day">10</div></div>
+        <div class="event-info">
+          <div class="event-tag">전시회</div>
+          <div class="event-title">클라우드&amp;AI 엑스포 2025 파트너 전시 참가</div>
+          <div class="event-meta">킨텍스 제1전시관 · 3일간 운영 · 무료 관람</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date-box" style="background:#ff9500"><div class="event-month">OCT</div><div class="event-day">14</div></div>
+        <div class="event-info">
+          <div class="event-tag">온라인 행사</div>
+          <div class="event-title">글로벌 DX 리더스 포럼 2025 – 아시아퍼시픽</div>
+          <div class="event-meta">온라인 라이브 스트리밍 · 한·영 동시통역 제공</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICE SECTION ─── -->
+<section class="section" id="service" style="background:var(--bg-soft)">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Service</div>
+      <h2 class="section-title">테크비나 서비스 소개</h2>
+      <p class="section-sub">웨비나 운영에 필요한 모든 것을 하나의 플랫폼에서 통합 지원합니다.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">전문 방송 스튜디오</div>
+        <div class="si-desc">방송 전문 인력과 전문 스튜디오, 고급 방송 장비를 갖춘 최적의 웨비나 환경을 제공합니다. 전문 아나운서까지 원스톱으로 지원합니다.</div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">웨비나 플랫폼 운영</div>
+        <div class="si-desc">안정적인 라이브 스트리밍, 실시간 Q&amp;A, 폴링, 채팅 등 참여형 기능으로 몰입도 높은 웨비나를 구현합니다.</div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">사후 영상 제작</div>
+        <div class="si-desc">웨비나 종료 후 하이라이트 편집, 자막 삽입, 클립 제작 등 다양한 포맷으로 콘텐츠 재활용을 지원합니다.</div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">맞춤형 B2B 연결</div>
+        <div class="si-desc">고객·파트너와의 관계를 강화하고, 새로운 협력 기회와 글로벌 시장 확장을 위한 전략적 웨비나를 설계합니다.</div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">성과 분석 리포트</div>
+        <div class="si-desc">참여율, 체류 시간, 질문 내역, 다운로드 현황 등 상세한 성과 데이터를 제공하여 ROI를 명확히 측정합니다.</div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="si-title">전담 운영 매니저</div>
+        <div class="si-desc">기획부터 사후 관리까지 전담 매니저가 밀착 지원합니다. 기술 리허설, 긴급 대응, 참가자 관리까지 책임집니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA STRIP ─── -->
+<section id="cta-strip">
+  <div class="section-inner">
+    <div class="cta-title">지금 바로 테크비나를 시작하세요</div>
+    <p class="cta-sub">회원가입 후 첫 웨비나 신청 시 운영 컨설팅을 무료로 제공합니다.</p>
+    <div class="cta-btns">
+      <button class="btn-hero-primary" onclick="openModal('signup')">무료 회원가입</button>
+      <button class="btn-hero-outline" onclick="openModal('consult')">도입 문의하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Tech<span>bina</span></div>
+        <p class="footer-desc">테크비나는 IT 기업을 위한 B2B 전문 웨비나 통합 솔루션입니다. 고객과 파트너를 기술로 연결합니다.<br><br>운영사: 라이브로TV<br>서울특별시 강남구 테헤란로 000</p>
+      </div>
+      <div class="footer-col">
+        <h4>웨비나</h4>
+        <a href="#">진행 예정</a>
+        <a href="#">진행 중</a>
+        <a href="#">다시보기</a>
+      </div>
+      <div class="footer-col">
+        <h4>콘텐츠</h4>
+        <a href="#">IT인사이트</a>
+        <a href="#">보도자료</a>
+        <a href="#">자료실</a>
+        <a href="#">이벤트</a>
+      </div>
+      <div class="footer-col">
+        <h4>서비스</h4>
+        <a href="#">서비스 소개</a>
+        <a href="#">스튜디오 소개</a>
+        <a href="#" onclick="openModal('consult')">문의하기</a>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Techbina by 라이브로TV. All rights reserved.</div>
+      <div class="footer-powered">Powered by <span>Techbina Platform</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── FLOATING BUTTONS ─── -->
+<div class="floating-btn">
+  <button class="float-consult" onclick="openModal('consult')">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1C4.58 1 1 4.13 1 8c0 1.7.62 3.27 1.67 4.52L1.5 16.5l4.1-1.3A8.32 8.32 0 009 15.98c4.42 0 8-3.13 8-7C17 4.13 13.42 1 9 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    실시간 상담
+  </button>
+  <button class="float-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 13V5M5 9l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
+<!-- ─── MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="modal-title" id="modalTitle">테크비나 회원가입</div>
+      <div class="modal-sub" id="modalSubtitle">전문 IT 웨비나 콘텐츠를 무제한으로 이용하세요</div>
+    </div>
+    <div class="modal-body">
+
+      <!-- Login Panel -->
+      <div class="login-panel" id="loginPanel">
+        <div class="modal-tabs">
+          <button class="modal-tab" onclick="switchModalTab('login')">로그인</button>
+          <button class="modal-tab active" onclick="switchModalTab('signup')">회원가입</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" type="email" placeholder="이메일 주소를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <input class="form-input" type="password" placeholder="비밀번호를 입력하세요">
+        </div>
+        <button class="btn-modal-submit" onclick="closeModal()">로그인</button>
+        <div class="modal-divider">또는 SNS로 간편 로그인</div>
+        <div class="sns-row">
+          <button class="btn-sns">Google</button>
+          <button class="btn-sns">Naver</button>
+          <button class="btn-sns">Kakao</button>
+        </div>
+        <p class="modal-agree">로그인 시 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의합니다.</p>
+      </div>
+
+      <!-- Signup Panel -->
+      <div class="signup-panel active" id="signupPanel">
+        <div class="modal-tabs">
+          <button class="modal-tab" onclick="switchModalTab('login')">로그인</button>
+          <button class="modal-tab active" onclick="switchModalTab('signup')">회원가입</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이름</label>
+          <input class="form-input" type="text" placeholder="성함을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" type="email" placeholder="업무용 이메일 주소를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">회사명</label>
+          <input class="form-input" type="text" placeholder="소속 회사명을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">직무/부서</label>
+          <select class="form-select">
+            <option value="">직무를 선택하세요</option>
+            <option>IT/개발</option>
+            <option>보안/인프라</option>
+            <option>경영/전략</option>
+            <option>영업/마케팅</option>
+            <option>데이터/AI</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <input class="form-input" type="password" placeholder="8자 이상 비밀번호를 입력하세요">
+        </div>
+        <button class="btn-modal-submit" onclick="closeModal()">무료 회원가입 완료</button>
+        <p class="modal-agree">회원가입 시 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의합니다.<br>마케팅 수신 동의 시 웨비나 알림을 받으실 수 있습니다.</p>
+      </div>
+
+      <!-- Consult Panel -->
+      <div class="signup-panel" id="consultPanel" style="display:none">
+        <div class="form-group">
+          <label class="form-label">담당자명</label>
+          <input class="form-input" type="text" placeholder="성함을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">회사명</label>
+          <input class="form-input" type="text" placeholder="회사명을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처</label>
+          <input class="form-input" type="tel" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" type="email" placeholder="이메일 주소를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label class="form-label">문의 내용</label>
+          <textarea class="form-input" style="height:80px;padding-top:10px;resize:none" placeholder="웨비나 서비스 도입 관련 문의 내용을 간략히 적어주세요."></textarea>
+        </div>
+        <button class="btn-modal-submit" onclick="closeModal()">문의 접수하기</button>
+        <p class="modal-agree">영업일 기준 1~2일 내에 담당자가 연락드립니다.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── TABS ───
+function switchTab(section, tab, btn) {
+  document.querySelectorAll('#' + section + '-upcoming, #' + section + '-live, #' + section + '-replay').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(section + '-' + tab);
+  if (panel) panel.classList.add('active');
+  if (btn) {
+    btn.closest('.tab-wrap').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+}
+
+// ─── INSIGHT FILTER ───
+function filterInsight(cat, btn) {
+  if (btn) {
+    document.querySelectorAll('#insightFilter .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  document.querySelectorAll('#insightGrid .insight-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
+  });
+}
+
+// ─── MODAL ───
+function openModal(type) {
+  const overlay = document.getElementById('modalOverlay');
+  const title = document.getElementById('modalTitle');
+  const sub = document.getElementById('modalSubtitle');
+  const signupPanel = document.getElementById('signupPanel');
+  const loginPanel = document.getElementById('loginPanel');
+  const consultPanel = document.getElementById('consultPanel');
+  const tabsEl = document.querySelectorAll('.modal-tabs');
+
+  // Reset
+  signupPanel.style.display = 'none';
+  loginPanel.style.display = 'none';
+  consultPanel.style.display = 'none';
+  tabsEl.forEach(t => t.style.display = '');
+
+  if (type === 'login') {
+    title.textContent = '테크비나 로그인';
+    sub.textContent = '회원 전용 웨비나와 자료를 이용하세요';
+    loginPanel.style.display = 'block';
+    switchModalTab('login');
+  } else if (type === 'consult') {
+    title.textContent = '도입 문의';
+    sub.textContent = '테크비나 전담 매니저가 안내해드립니다';
+    consultPanel.style.display = 'block';
+    tabsEl.forEach(t => t.style.display = 'none');
+  } else {
+    title.textContent = '테크비나 회원가입';
+    sub.textContent = '전문 IT 웨비나 콘텐츠를 무제한으로 이용하세요';
+    signupPanel.style.display = 'block';
+    switchModalTab('signup');
+  }
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function switchModalTab(tab) {
+  const signupPanel = document.getElementById('signupPanel');
+  const loginPanel = document.getElementById('loginPanel');
+  document.querySelectorAll('.modal-tabs .modal-tab').forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'signup' && i === 1));
+  });
+  if (tab === 'login') {
+    loginPanel.style.display = 'block';
+    signupPanel.style.display = 'none';
+  } else {
+    signupPanel.style.display = 'block';
+    loginPanel.style.display = 'none';
+  }
+}
+
+// ─── SEARCH ───
+const searchData = [
+  { tag: '웨비나', title: '생성형 AI 도입 전략과 실제 적용 사례 분석', sub: '2025.07.15 · AI & Data' },
+  { tag: '웨비나', title: '클라우드 네이티브 전환 로드맵과 멀티클라우드 전략', sub: '2025.07.22 · 클라우드' },
+  { tag: '웨비나', title: '제로 트러스트 보안 아키텍처 구축 실전 가이드', sub: '2025.07.29 · 보안' },
+  { tag: '인사이트', title: '2025 국내 생성형 AI 도입 현황 및 산업별 활용 전망', sub: '2025.07.01 · AI & Data' },
+  { tag: '인사이트', title: 'FinOps 전략으로 클라우드 비용 30% 절감한 사례 연구', sub: '2025.06.25 · 클라우드' },
+  { tag: '인사이트', title: '랜섬웨어 공격 최신 동향과 기업 대응 방안 2025', sub: '2025.06.18 · 보안' },
+  { tag: '자료실', title: '2025 상반기 국내 IT 시장 동향 분석 리포트', sub: '리포트 · 2025.07.01' },
+  { tag: '자료실', title: '생성형 AI 도입 전략 발표자료', sub: '발표자료 · 2025.06.10' },
+  { tag: '이벤트', title: 'Techbina Summit 2025 – AI·Cloud 혁신 컨퍼런스', sub: '2025.08.05 · 서울 코엑스' },
+];
+
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (!q) { searchResults.classList.remove('active'); return; }
+  const filtered = searchData.filter(d => d.title.toLowerCase().includes(q) || d.tag.toLowerCase().includes(q) || d.sub.toLowerCase().includes(q));
+  if (!filtered.length) {
+    searchResults.innerHTML = '<div style="padding:16px 20px;font-size:13.5px;color:var(--text-muted)">검색 결과가 없습니다.</div>';
+  } else {
+    searchResults.innerHTML = filtered.slice(0,5).map(d => `
+      <div class="search-result-item" onclick="searchResults.classList.remove('active');searchInput.value=''">
+        <div class="sr-tag">${d.tag}</div>
+        <div><div class="sr-title">${highlight(d.title, q)}</div><div class="sr-sub">${d.sub}</div></div>
+      </div>
+    `).join('');
+  }
+  searchResults.classList.add('active');
+});
+
+function highlight(text, q) {
+  const idx = text.toLowerCase().indexOf(q);
+  if (idx < 0) return text;
+  return text.slice(0, idx) + '<strong style="color:var(--primary)">' + text.slice(idx, idx + q.length) + '</strong>' + text.slice(idx + q.length);
+}
+
+function doSearch() { searchInput.dispatchEvent(new Event('input')); searchInput.focus(); }
+
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('searchWrap').contains(e.target)) {
+    searchResults.classList.remove('active');
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); searchResults.classList.remove('active'); closeMobileNav(); }
+});
+
+// ─── MOBILE NAV ───
+function openMobileNav() { document.getElementById('mobileNav').classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeMobileNav() { document.getElementById('mobileNav').classList.remove('active'); document.body.style.overflow = ''; }
+</script>
+</body>
+</html>
