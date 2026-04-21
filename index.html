@@ -142,110 +142,102 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;}
 /* Mobile hamburger */
 .hamburger { display: none; padding: 8px; color: var(--text); }
 
-/* ─── HERO ─── */
+/* ─── HERO (ROLLING BANNER) ─── */
 #hero {
   margin-top: var(--header-h);
   background: linear-gradient(135deg, #011f4f 0%, #013b8a 50%, #017AFF 100%);
-  padding: 90px 24px 80px;
+  padding: 0;
   position: relative; overflow: hidden;
+  height: 400px;
 }
-#hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+.hero-slider {
+  position: relative; width: 100%; height: 100%;
+  overflow: hidden;
 }
-.hero-inner {
-  max-width: 1280px; margin: 0 auto;
+.hero-slide {
+  position: absolute; inset: 0; opacity: 0;
+  transition: opacity .6s ease-in-out;
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 24px;
+}
+.hero-slide.active { opacity: 1; }
+.hero-slide-inner {
+  max-width: 1280px; width: 100%; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-  position: relative; z-index: 1;
 }
+.hero-slide-content {}
 .hero-label {
   display: inline-block; padding: 6px 14px; border-radius: 20px;
-  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
-  font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
-  color: rgba(255,255,255,.9); margin-bottom: 20px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,.9); margin-bottom: 16px;
 }
 .hero-title {
   font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
-  font-size: clamp(32px, 4vw, 54px); font-weight: 800; line-height: 1.15;
-  color: #fff; margin-bottom: 16px; letter-spacing: -1.5px;
+  font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; line-height: 1.2;
+  color: #fff; margin-bottom: 12px; letter-spacing: -1px;
 }
-.hero-title em { color: #7cbfff; font-style: normal; }
 .hero-sub {
-  font-size: 16px; color: rgba(255,255,255,.7); margin-bottom: 36px; line-height: 1.8;
+  font-size: 15px; color: rgba(255,255,255,.75); margin-bottom: 28px; line-height: 1.7;
 }
+.hero-meta {
+  font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.meta-item { display: flex; align-items: center; gap: 6px; }
+.meta-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); }
 .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
 .btn-hero-primary {
-  height: 48px; padding: 0 28px; border-radius: 10px;
-  font-size: 15px; font-weight: 700; color: var(--primary);
-  background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  height: 44px; padding: 0 28px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; color: var(--primary);
+  background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.2);
   transition: transform .2s, box-shadow .2s;
+  border: none; cursor: pointer; font-family: inherit;
 }
-.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.25); }
 .btn-hero-outline {
-  height: 48px; padding: 0 28px; border-radius: 10px;
-  font-size: 15px; font-weight: 600; color: #fff;
-  border: 1.5px solid rgba(255,255,255,.35);
-  transition: background .2s, border-color .2s;
+  height: 44px; padding: 0 28px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.4); background: transparent;
+  transition: all .2s; cursor: pointer; font-family: inherit;
 }
-.btn-hero-outline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.6); }
-
-/* Hero stats */
-.hero-stats {
-  display: flex; gap: 32px; margin-top: 40px;
-  padding-top: 32px; border-top: 1px solid rgba(255,255,255,.12);
-}
-.stat-item {}
-.stat-num { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -1px; }
-.stat-label { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 2px; }
+.btn-hero-outline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.7); }
 
 /* Hero visual */
 .hero-visual {
-  background: rgba(255,255,255,.06);
+  background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px; padding: 28px;
+  border-radius: 12px; padding: 24px;
   backdrop-filter: blur(8px);
 }
-.webinar-card-preview {
-  background: rgba(255,255,255,.08); border-radius: 12px;
-  padding: 20px; margin-bottom: 12px;
-  border: 1px solid rgba(255,255,255,.1);
-}
-.live-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #ff3b3b; color: #fff; font-size: 11px; font-weight: 700;
-  padding: 4px 10px; border-radius: 20px; letter-spacing: .5px;
-  margin-bottom: 10px;
-}
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse-dot 1.2s ease-in-out infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
-.wc-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-.wc-meta { font-size: 12px; color: rgba(255,255,255,.5); }
-.wc-speakers { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
-.speaker-ava {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #5ac8fa);
-  border: 2px solid rgba(255,255,255,.3);
-}
-.speaker-ava:nth-child(2) { background: linear-gradient(135deg, #34c759, #30d158); margin-left: -8px; }
-.speaker-ava:nth-child(3) { background: linear-gradient(135deg, #ff9500, #ff6b00); margin-left: -8px; }
-.wc-count { font-size: 12px; color: rgba(255,255,255,.5); margin-left: 4px; }
+.hero-visual-item { margin-bottom: 12px; }
+.hero-visual-item:last-child { margin-bottom: 0; }
+.hvitem-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.hvitem-meta { font-size: 11px; color: rgba(255,255,255,.5); }
 
-/* Upcoming webinars list */
-.upcoming-mini { margin-top: 16px; }
-.mini-item {
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,.05); border-radius: 8px; padding: 10px 14px;
-  margin-bottom: 8px; border: 1px solid rgba(255,255,255,.07);
+/* Slider controls */
+.hero-controls {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 10;
 }
-.mini-title { font-size: 13px; color: rgba(255,255,255,.8); font-weight: 500; }
-.mini-date { font-size: 11px; color: rgba(255,255,255,.4); }
-.mini-btn {
-  font-size: 11px; font-weight: 600; color: var(--primary);
-  background: rgba(1,122,255,.15); padding: 4px 10px; border-radius: 5px;
-  transition: background .2s;
+.hero-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,.4); border: none; cursor: pointer;
+  transition: all .3s;
 }
-.mini-btn:hover { background: rgba(1,122,255,.3); }
+.hero-dot.active { background: #fff; width: 28px; border-radius: 5px; }
+
+/* Slider arrows */
+.hero-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.3);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .2s; z-index: 10;
+}
+.hero-arrow:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.5); }
+.hero-arrow.prev { left: 24px; }
+.hero-arrow.next { right: 24px; }
 
 /* ─── SECTION BASE ─── */
 .section { padding: 72px 24px; }
@@ -339,7 +331,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;}
 .ar-type.report { background: #e0f2fe; color: #0369a1; }
 .ar-type.slide { background: #fef3c7; color: #92400e; }
 .ar-title { font-weight: 600; color: var(--text); }
-.ar-title-locked { font-weight: 600; color: var(--text-muted); filter: blur(1.5px); user-select: none; }
+.ar-title-locked { font-weight: 600; color: var(--text); }
 .login-required-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 3px 8px; border-radius: 4px; margin-left: 10px; }
 .btn-download { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-sub); border: 1.5px solid var(--border); padding: 7px 14px; border-radius: 6px; transition: all .2s; }
 .btn-download:hover { border-color: var(--primary); color: var(--primary); }
@@ -498,16 +490,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 }
 .chip:hover { background: var(--primary); color: #fff; }
 
-/* Typing indicator */
-.typing-indicator { display: flex; gap: 4px; align-items: center; padding: 10px 14px; }
-.typing-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted);
-  animation: typing-bounce .9s ease-in-out infinite;
-}
-.typing-dot:nth-child(2) { animation-delay: .15s; }
-.typing-dot:nth-child(3) { animation-delay: .3s; }
-@keyframes typing-bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
-
 /* Chat footer */
 .chat-footer {
   padding: 12px 14px; border-top: 1px solid var(--border);
@@ -536,11 +518,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   box-shadow: var(--shadow-md); transition: transform .2s; cursor: pointer;
 }
 .scroll-top-btn:hover { transform: translateY(-2px); color: var(--primary); }
-
-@media (max-width: 480px) {
-  .chat-widget { bottom: 16px; right: 16px; }
-  .chat-window { width: calc(100vw - 32px); }
-}
 
 /* ─── MODAL ─── */
 .modal-overlay {
@@ -649,16 +626,20 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 @media (max-width: 1024px) {
   .webinar-grid, .insight-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr; }
-  .hero-inner { gap: 32px; }
+  .hero-slide-inner { grid-template-columns: 1fr; gap: 32px; }
+  .hero-visual { display: none; }
 }
 @media (max-width: 768px) {
   .gnb, .header-right .search-wrap, .header-right .btn-login { display: none; }
   .hamburger { display: flex; }
   .header-right { gap: 8px; }
   .header-right .btn-signup { display: none; }
-  .hero-inner { grid-template-columns: 1fr; }
+  #hero { height: 480px; }
+  .hero-slide-inner { grid-template-columns: 1fr; }
   .hero-visual { display: none; }
-  .hero-stats { gap: 20px; }
+  .hero-arrow { width: 36px; height: 36px; }
+  .hero-arrow.prev { left: 12px; }
+  .hero-arrow.next { right: 12px; }
   .webinar-grid, .insight-grid, .event-grid, .service-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; gap: 24px; }
   .archive-table thead { display: none; }
@@ -667,7 +648,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   .archive-table tr:hover td { background: transparent; }
 }
 @media (max-width: 480px) {
-  .hero-stats { flex-direction: column; gap: 12px; }
   .section { padding: 48px 16px; }
   .floating-btn { bottom: 16px; right: 16px; }
 }
@@ -763,59 +743,107 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   </div>
 </div>
 
-<!-- ─── HERO ─── -->
+<!-- ─── HERO (ROLLING BANNER) ─── -->
 <section id="hero">
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-label">B2B IT Webinar Platform</div>
-      <h1 class="hero-title">고객과 파트너를<br><em>기술로 연결하다</em></h1>
-      <p class="hero-sub">테크비나는 IT 기업을 위한 전문 웨비나 통합 솔루션입니다.<br>방송 연출부터 플랫폼 운영, 사후 영상 제작까지 원스톱으로 지원합니다.</p>
-      <div class="hero-cta">
-        <button class="btn-hero-primary" onclick="openModal('signup')">무료로 시작하기</button>
-        <a href="#service" class="btn-hero-outline">서비스 소개 보기</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-item"><div class="stat-num">2,400+</div><div class="stat-label">누적 웨비나 진행</div></div>
-        <div class="stat-item"><div class="stat-num">380K+</div><div class="stat-label">총 시청자 수</div></div>
-        <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">파트너 만족도</div></div>
+  <div class="hero-slider" id="heroSlider">
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <div class="hero-slide-inner">
+        <div class="hero-slide-content">
+          <div class="hero-label">LIVE NOW</div>
+          <h1 class="hero-title">생성형 AI 도입 전략과 실제 적용 사례 분석</h1>
+          <p class="hero-sub">실제 도입 사례를 내 조직에 적용하는 방법을 알아보세요.</p>
+          <div class="hero-meta">
+            <span class="meta-item"><span class="meta-dot"></span>AI &amp; Data</span>
+            <span class="meta-item"><span class="meta-dot"></span>시청자 1,247명</span>
+          </div>
+          <div class="hero-cta">
+            <button class="btn-hero-primary" onclick="scrollToSection('webinar'); switchTab('webinar','live',document.querySelectorAll('#webinar .tab-btn')[1])">NOW 시청하기</button>
+            <button class="btn-hero-outline" onclick="openModal('signup')">웨비나 등록</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다음 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.15 · 클라우드 네이티브 전환</div>
+          </div>
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다음 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.22 · 제로 트러스트 보안 아키텍처</div>
+          </div>
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다음 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.29 · 엔터프라이즈 DX 성공 전략</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="webinar-card-preview">
-        <div class="live-badge"><span class="live-dot"></span> LIVE</div>
-        <div class="wc-title">생성형 AI 도입 전략과 실제 적용 사례 분석</div>
-        <div class="wc-meta">AI &amp; Data · 오늘 14:00 시작 · 시청자 1,247명</div>
-        <div class="wc-speakers">
-          <div class="speaker-ava"></div>
-          <div class="speaker-ava"></div>
-          <div class="speaker-ava"></div>
-          <span class="wc-count">발표자 3인</span>
-          <button class="mini-btn" style="margin-left:auto" onclick="openModal('signup')">참여하기</button>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="hero-slide-inner">
+        <div class="hero-slide-content">
+          <div class="hero-label">COMING SOON</div>
+          <h1 class="hero-title">클라우드 네이티브 전환 로드맵과 멀티클라우드 전략</h1>
+          <p class="hero-sub">다중 클라우드 환경에서 비용을 억내는 방법을 내단 전문가들으로부터 스킨 스텝을 받으세요.</p>
+          <div class="hero-meta">
+            <span class="meta-item"><span class="meta-dot"></span>클라우드</span>
+            <span class="meta-item"><span class="meta-dot"></span>2025.07.15 (14:00)</span>
+          </div>
+          <div class="hero-cta">
+            <button class="btn-hero-primary" onclick="openModal('signup')">웨비나 등록</button>
+            <button class="btn-hero-outline" onclick="scrollToSection('webinar')">more 보기</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다른 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.22 · 제로 트러스트 보안</div>
+          </div>
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다른 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.29 · 엔터프라이즈 DX 성공</div>
+          </div>
         </div>
       </div>
-      <div class="upcoming-mini">
-        <div class="mini-item">
-          <div>
-            <div class="mini-title">클라우드 네이티브 전환 로드맵</div>
-            <div class="mini-date">2025.07.15 · 14:00</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <div class="hero-slide-inner">
+        <div class="hero-slide-content">
+          <div class="hero-label">COMING SOON</div>
+          <h1 class="hero-title">제로 트러스트 보안 아키텍처 구축 실전 가이드</h1>
+          <p class="hero-sub">제로 트러스트 보안 아키텍처를 구축하는 단계별 스팅과 실제 적용 사례를 내단 전문가들으로부터 스킨 스텝을 받으세요.</p>
+          <div class="hero-meta">
+            <span class="meta-item"><span class="meta-dot"></span>보안</span>
+            <span class="meta-item"><span class="meta-dot"></span>2025.07.22 (15:00)</span>
           </div>
-          <button class="mini-btn" onclick="openModal('signup')">신청</button>
+          <div class="hero-cta">
+            <button class="btn-hero-primary" onclick="openModal('signup')">웨비나 등록</button>
+            <button class="btn-hero-outline" onclick="scrollToSection('webinar')">more 보기</button>
+          </div>
         </div>
-        <div class="mini-item">
-          <div>
-            <div class="mini-title">제로 트러스트 보안 아키텍처 구축 가이드</div>
-            <div class="mini-date">2025.07.22 · 14:00</div>
+        <div class="hero-visual">
+          <div class="hero-visual-item">
+            <div class="hvitem-title">다른 예정 웨비나</div>
+            <div class="hvitem-meta">2025.07.29 · 엔터프라이즈 DX</div>
           </div>
-          <button class="mini-btn" onclick="openModal('signup')">신청</button>
-        </div>
-        <div class="mini-item">
-          <div>
-            <div class="mini-title">엔터프라이즈 DX 성공 전략과 ROI 분석</div>
-            <div class="mini-date">2025.07.29 · 16:00</div>
-          </div>
-          <button class="mini-btn" onclick="openModal('signup')">신청</button>
         </div>
       </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="hero-arrow prev" onclick="heroSlide(-1)">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4l-8 6 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="hero-arrow next" onclick="heroSlide(1)">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4l8 6-8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="hero-controls" id="heroControls">
+      <button class="hero-dot active" onclick="heroGoToSlide(0)"></button>
+      <button class="hero-dot" onclick="heroGoToSlide(1)"></button>
+      <button class="hero-dot" onclick="heroGoToSlide(2)"></button>
     </div>
   </div>
 </section>
@@ -1057,34 +1085,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
           <td><span class="ar-title">생성형 AI 도입 전략 - 산업별 적용 사례 발표자료</span></td>
           <td><span class="ar-date">2025.06.10</span></td>
           <td><button class="btn-download" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
-        </tr>
-        <!-- Locked rows -->
-        <tr class="ar-row-locked">
-          <td><span class="ar-type report">리포트</span></td>
-          <td>
-            <span class="ar-title-locked">클라우드 전환 비용 절감 사례 심층 분석 보고서</span>
-            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
-          </td>
-          <td><span class="ar-date">2025.05.20</span></td>
-          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
-        </tr>
-        <tr class="ar-row-locked">
-          <td><span class="ar-type slide">발표자료</span></td>
-          <td>
-            <span class="ar-title-locked">제로 트러스트 보안 아키텍처 구현 상세 가이드</span>
-            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
-          </td>
-          <td><span class="ar-date">2025.05.06</span></td>
-          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
-        </tr>
-        <tr class="ar-row-locked">
-          <td><span class="ar-type report">리포트</span></td>
-          <td>
-            <span class="ar-title-locked">엔터프라이즈 AI 투자 수익률 분석 및 벤치마킹 데이터</span>
-            <span class="login-required-badge"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="2" y="5" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2"/></svg> 로그인 후 이용 가능</span>
-          </td>
-          <td><span class="ar-date">2025.04.15</span></td>
-          <td><button class="btn-download-locked" onclick="openModal('signup')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 10v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 다운로드</button></td>
         </tr>
       </tbody>
     </table>
@@ -1401,6 +1401,35 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 </div>
 
 <script>
+// ─── HERO SLIDER ───
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const totalSlides = slides.length;
+
+function heroSlide(direction) {
+  currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+  updateHeroSlide();
+}
+
+function heroGoToSlide(index) {
+  currentSlide = index;
+  updateHeroSlide();
+}
+
+function updateHeroSlide() {
+  slides.forEach((slide, idx) => {
+    slide.classList.toggle('active', idx === currentSlide);
+  });
+  document.querySelectorAll('.hero-dot').forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentSlide);
+  });
+}
+
+// Auto-rotate slides every 8 seconds
+setInterval(() => {
+  heroSlide(1);
+}, 8000);
+
 // ─── TABS ───
 function switchTab(section, tab, btn) {
   document.querySelectorAll('#' + section + '-upcoming, #' + section + '-live, #' + section + '-replay').forEach(p => p.classList.remove('active'));
@@ -1538,6 +1567,14 @@ document.addEventListener('keydown', function(e) {
 // ─── MOBILE NAV ───
 function openMobileNav() { document.getElementById('mobileNav').classList.add('active'); document.body.style.overflow = 'hidden'; }
 function closeMobileNav() { document.getElementById('mobileNav').classList.remove('active'); document.body.style.overflow = ''; }
+
+// ─── SCROLL TO SECTION ───
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
 // ─── CHATBOT ───
 function toggleChat() {
