@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Techbina – 고객과 파트너를 기술로 연결하다</title>
+<title>Techbinar – 고객과 파트너를 기술로 연결하다</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
 :root {
@@ -200,9 +200,7 @@ body.logged-in .show-logged-out { display: none; }
   max-height: calc(100vh - var(--header-h)); overflow-y: auto;
   transform: translateY(-100%); opacity: 0; transition: all .3s cubic-bezier(.34,.69,.64,1);
 }
-.mega-menu.active {
-  transform: translateY(0); opacity: 1;
-}
+.mega-menu.active { transform: translateY(0); opacity: 1; }
 
 .mega-menu-inner {
   max-width: 1280px; margin: 0 auto; padding: 40px 24px;
@@ -217,13 +215,11 @@ body.logged-in .show-logged-out { display: none; }
 .mega-menu-list { display: flex; flex-direction: column; gap: 0; }
 .mega-menu-item {
   padding: 10px 0; font-size: 14px; color: var(--text-sub);
-  transition: color .2s, padding-left .2s;
-  cursor: pointer;
+  transition: color .2s, padding-left .2s; cursor: pointer;
 }
 .mega-menu-item:hover { color: var(--primary); padding-left: 8px; }
 .mega-menu-item a { color: inherit; text-decoration: none; display: block; }
 
-/* Responsive */
 @media (max-width: 768px) {
   .menu-toggle-btn { display: none; }
   .mega-menu-inner { grid-template-columns: 1fr; gap: 24px; }
@@ -780,7 +776,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   .hero-visual { display: none; }
 }
 @media (max-width: 768px) {
-  .gnb, .header-right .search-wrap, .header-right .btn-login, .menu-toggle-btn { display: none; }
+  .gnb, .header-right .search-wrap, .header-right .btn-login { display: none; }
   .hamburger { display: flex; }
   .header-right { gap: 8px; }
   .header-right .btn-signup { display: none; }
@@ -808,7 +804,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 <!-- ─── HEADER ─── -->
 <header id="header">
   <div class="header-inner">
-    <a href="#" class="logo">Tech<span>bina</span></a>
+    <a href="#" class="logo">Tech<span>binar</span></a>
 
     <nav class="gnb">
       <!-- 웨비나 -->
@@ -866,8 +862,8 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
       <!-- User Menu (Logged In) -->
       <div class="user-menu show-logged-in" id="userMenu">
         <button class="user-menu-btn" onclick="toggleUserMenu()">
-          <div class="user-avatar-small">김</div>
-          <span>김태현</span>
+          <div class="user-avatar-small">박</div>
+          <span>박혜인</span>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="user-menu-dropdown" id="userMenuDropdown">
@@ -894,7 +890,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
     <div class="mega-menu-section">
       <div class="mega-menu-title">웨비나</div>
       <div class="mega-menu-list">
-        <div class="mega-menu-item"><a href="#webinar" onclick="switchTab('webinar','upcoming');closeMegaMenu()">진행 예정</a></div>
+        <div class="mega-menu-item"><a href="#webinar" onclick="switchTab('webinar','upcoming');closeMegaMenu()">\uc9c4행 예정</a></div>
         <div class="mega-menu-item"><a href="#webinar" onclick="switchTab('webinar','live');closeMegaMenu()">진행 중</a></div>
         <div class="mega-menu-item"><a href="#webinar" onclick="switchTab('webinar','replay');closeMegaMenu()">다시보기</a></div>
       </div>
@@ -903,7 +899,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
     <div class="mega-menu-section">
       <div class="mega-menu-title">IT인사이트</div>
       <div class="mega-menu-list">
-        <div class="mega-menu-item"><a href="#insight" onclick="filterInsight('all');closeMegaMenu()">\uc804체</a></div>
+        <div class="mega-menu-item"><a href="#insight" onclick="filterInsight('all');closeMegaMenu()">전체</a></div>
         <div class="mega-menu-item"><a href="#insight" onclick="filterInsight('ai');closeMegaMenu()">AI &amp; Data</a></div>
         <div class="mega-menu-item"><a href="#insight" onclick="filterInsight('cloud');closeMegaMenu()">클라우드</a></div>
         <div class="mega-menu-item"><a href="#insight" onclick="filterInsight('sec');closeMegaMenu()">보안</a></div>
@@ -916,7 +912,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
       <div class="mega-menu-list">
         <div class="mega-menu-item"><a href="#events" onclick="closeMegaMenu()">기업 이벤트</a></div>
         <div class="mega-menu-item"><a href="#events" onclick="closeMegaMenu()">스폰서십</a></div>
-        <div class="mega-menu-item"><a href="#events" onclick="closeMegaMenu()">서비스 업데이트</a></div>
       </div>
     </div>
     <!-- 자료실 -->
@@ -925,7 +920,6 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
       <div class="mega-menu-list">
         <div class="mega-menu-item"><a href="#archive" onclick="closeMegaMenu()">발표자료</a></div>
         <div class="mega-menu-item"><a href="#archive" onclick="closeMegaMenu()">레포트</a></div>
-        <div class="mega-menu-item"><a href="#archive" onclick="closeMegaMenu()">중요 뉴스</a></div>
       </div>
     </div>
     <!-- 서비스 소개 -->
@@ -943,7 +937,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 <!-- ─── MOBILE NAV ─── -->
 <div class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-header">
-    <span class="mobile-nav-logo">Tech<span>bina</span></span>
+    <span class="mobile-nav-logo">Tech<span>binar</span></span>
     <button class="mobile-close" onclick="closeMobileNav()">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>
@@ -1327,7 +1321,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
         <div class="event-date-box"><div class="event-month">AUG</div><div class="event-day">05</div></div>
         <div class="event-info">
           <div class="event-tag">컨퍼런스</div>
-          <div class="event-title">Techbina Summit 2025 – AI·Cloud 혁신 컨퍼런스</div>
+          <div class="event-title">Techbinar Summit 2025 – AI·Cloud 혁신 컨퍼런스</div>
           <div class="event-meta">서울 코엑스 그랜드볼룸 · 오전 9시 · 참가비 무료(사전 등록)</div>
         </div>
       </div>
@@ -1364,10 +1358,10 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   <div class="section-inner">
     <div class="mypage-header">
       <div class="mypage-user-info">
-        <div class="mypage-user-avatar">김</div>
+        <div class="mypage-user-avatar">박</div>
         <div class="mypage-user-details">
-          <div class="mypage-user-name">김태현</div>
-          <div class="mypage-user-company">삼성전자 · IT전략팀 · 수석 연구원</div>
+          <div class="mypage-user-name">박혜인</div>
+          <div class="mypage-user-company">라이브로TV</div>
         </div>
         <div class="mypage-user-actions" style="margin-left:auto">
           <button onclick="alert('프로필 수정 기능입니다')">프로필 수정</button>
@@ -1596,7 +1590,7 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-logo">Tech<span>bina</span></div>
+        <div class="footer-logo">Tech<span>binar</span></div>
         <p class="footer-desc">테크비나는 IT 기업을 위한 B2B 전문 웨비나 통합 솔루션입니다. 고객과 파트너를 기술로 연결합니다.<br><br>운영사: 라이브로TV<br>서울특별시 강남구 테헤란로 000</p>
       </div>
       <div class="footer-col">
@@ -1622,8 +1616,8 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2025 Techbina by 라이브로TV. All rights reserved.</div>
-      <div class="footer-powered">Powered by <span>Techbina Platform</span></div>
+      <div class="footer-copy">© 2026 Techbinar by 라이브로TV. All rights reserved.</div>
+      <div class="footer-powered">Powered by <span>Techbinar Platform</span></div>
     </div>
   </div>
 </footer>
@@ -1991,7 +1985,7 @@ const searchData = [
   { tag: '인사이트', title: '랜섬웨어 공격 최신 동향과 기업 대응 방안 2025', sub: '2025.06.18 · 보안' },
   { tag: '자료실', title: '2025 상반기 국내 IT 시장 동향 분석 리포트', sub: '리포트 · 2025.07.01' },
   { tag: '자료실', title: '생성형 AI 도입 전략 발표자료', sub: '발표자료 · 2025.06.10' },
-  { tag: '이벤트', title: 'Techbina Summit 2025 – AI·Cloud 혁신 컨퍼런스', sub: '2025.08.05 · 서울 코엑스' },
+  { tag: '이벤트', title: 'Techbinar Summit 2025 – AI·Cloud 혁신 컨퍼런스', sub: '2025.08.05 · 서울 코엑스' },
 ];
 
 const searchInput = document.getElementById('searchInput');
