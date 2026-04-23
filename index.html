@@ -808,9 +808,9 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
 
     <nav class="gnb">
       <!-- 웨비나 -->
-      <div class="gnb-item">
-        웨비나
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="gnb-item" onclick="event.stopPropagation()">
+        <a href="#webinar" style="display:flex;align-items:center;gap:3px;color:inherit">웨비나
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="dropdown">
           <a href="#webinar" onclick="switchTab('webinar','upcoming'); closeMobileNav();">진행 예정</a>
           <a href="#webinar" onclick="switchTab('webinar','live'); closeMobileNav();">진행 중</a>
@@ -818,9 +818,9 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
         </div>
       </div>
       <!-- IT인사이트 -->
-      <div class="gnb-item">
-        IT인사이트/보도자료
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="gnb-item" onclick="event.stopPropagation()">
+        <a href="#insight" style="display:flex;align-items:center;gap:3px;color:inherit">IT인사이트/보도자료
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="dropdown">
           <a href="#insight" onclick="filterInsight('all')">전체</a>
           <a href="#insight" onclick="filterInsight('ai')">AI &amp; Data</a>
@@ -834,9 +834,9 @@ footer { background: #0d1117; color: #fff; padding: 80px 24px 40px; }
       <!-- 자료실 -->
       <div class="gnb-item"><a href="#archive">자료실</a></div>
       <!-- 서비스 소개 -->
-      <div class="gnb-item">
-        서비스 소개
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="gnb-item" onclick="event.stopPropagation()">
+        <a href="#service" style="display:flex;align-items:center;gap:3px;color:inherit">서비스 소개
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="dropdown">
           <a href="#service">서비스 소개</a>
           <a href="#service">스튜디오 소개</a>
